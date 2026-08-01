@@ -1,0 +1,202 @@
+{
+  "products": [
+    {
+      "id": "prd-1780588088936",
+      "name": "Test Mango Premium",
+      "category": "Fruits",
+      "unit": "1 kg",
+      "price": 180,
+      "mrp": 220,
+      "stock": 10,
+      "tag": "Backend test",
+      "image": "test",
+      "createdAt": "2026-06-04T15:48:08.967Z",
+      "updatedAt": "2026-06-12T08:59:29.724Z",
+      "imagePath": "/uploads/products/1781252228616-9.webp"
+    },
+    {
+      "id": "prd-001",
+      "name": "Banana Robusta",
+      "category": "Fruits",
+      "unit": "1 kg",
+      "price": 58,
+      "mrp": 70,
+      "stock": 40,
+      "tag": "Daily fresh",
+      "image": "banana",
+      "updatedAt": "2026-06-12T08:18:40.802Z",
+      "imagePath": "/uploads/products/1781252319678-10.png"
+    },
+    {
+      "id": "prd-002",
+      "name": "Apple Royal Gala",
+      "category": "Fruits",
+      "unit": "1 kg",
+      "price": 210,
+      "mrp": 245,
+      "stock": 15,
+      "tag": "Premium",
+      "image": "apple",
+      "updatedAt": "2026-06-12T08:59:29.724Z",
+      "imagePath": "/uploads/products/1781252401909-11.jpg"
+    },
+    {
+      "id": "prd-003",
+      "name": "Tomato Hybrid",
+      "category": "Vegetables",
+      "unit": "1 kg",
+      "price": 38,
+      "mrp": 48,
+      "stock": 54,
+      "tag": "Kitchen essential",
+      "image": "tomato",
+      "updatedAt": "2026-06-12T08:21:03.597Z",
+      "imagePath": "/uploads/products/1781252462285-12.webp"
+    },
+    {
+      "id": "prd-004",
+      "name": "Potato Fresh",
+      "category": "Vegetables",
+      "unit": "1 kg",
+      "price": 34,
+      "mrp": 42,
+      "stock": 70,
+      "tag": "Value pack",
+      "image": "potato",
+      "imagePath": "/uploads/products/1781252534754-13.jpg",
+      "updatedAt": "2026-06-12T08:22:16.504Z"
+    },
+    {
+      "id": "prd-005",
+      "name": "A2 Milk",
+      "category": "Dairy",
+      "unit": "1 L",
+      "price": 78,
+      "mrp": 85,
+      "stock": 26,
+      "tag": "Morning delivery",
+      "image": "a2",
+      "imagePath": "/uploads/products/1781252586874-14.jpg",
+      "updatedAt": "2026-06-12T08:23:08.426Z"
+    },
+    {
+      "id": "prd-006",
+      "name": "Paneer Malai",
+      "category": "Dairy",
+      "unit": "200 g",
+      "price": 96,
+      "mrp": 115,
+      "stock": 15,
+      "tag": "Fresh block",
+      "image": "paneer",
+      "imagePath": "/uploads/products/1781252653310-15.webp",
+      "updatedAt": "2026-06-12T08:24:14.491Z"
+    },
+    {
+      "id": "prd-007",
+      "name": "Sona Masoori Rice",
+      "category": "Staples",
+      "unit": "5 kg",
+      "price": 390,
+      "mrp": 445,
+      "stock": 30,
+      "tag": "Family pack",
+      "image": "sona",
+      "imagePath": "/uploads/products/1781252702008-16.jpg",
+      "updatedAt": "2026-06-12T08:25:03.007Z"
+    },
+    {
+      "id": "prd-008",
+      "name": "Toor Dal Premium",
+      "category": "Staples",
+      "unit": "1 kg",
+      "price": 168,
+      "mrp": 190,
+      "stock": 34,
+      "tag": "Protein rich",
+      "image": "toor",
+      "imagePath": "/uploads/products/1781252831792-17.png",
+      "updatedAt": "2026-06-12T08:27:12.723Z"
+    },
+    {
+      "id": "prd-009",
+      "name": "Filter Coffee Powder",
+      "category": "Beverages",
+      "unit": "500 g",
+      "price": 245,
+      "mrp": 280,
+      "stock": 20,
+      "tag": "South blend",
+      "image": "filter",
+      "imagePath": "/uploads/products/1781252894353-18.webp",
+      "updatedAt": "2026-06-12T08:28:15.527Z"
+    },
+    {
+      "id": "prd-010",
+      "name": "Coconut Water",
+      "category": "Beverages",
+      "unit": "1 pc",
+      "price": 42,
+      "mrp": 55,
+      "stock": 50,
+      "tag": "Hydration",
+      "image": "coconut",
+      "imagePath": "/uploads/products/1781252954386-19.webp",
+      "updatedAt": "2026-06-12T08:29:15.656Z"
+    },
+    {
+      "id": "prd-011",
+      "name": "Millet Cookies",
+      "category": "Snacks",
+      "unit": "250 g",
+      "price": 135,
+      "mrp": 160,
+      "stock": 22,
+      "tag": "Healthy snack",
+      "image": "millet",
+      "imagePath": "/uploads/products/1781253000786-20.jpg",
+      "updatedAt": "2026-06-12T08:30:02.552Z"
+    },
+    {
+      "id": "prd-012",
+      "name": "Dishwash Liquid",
+      "category": "Household",
+      "unit": "750 ml",
+      "price": 118,
+      "mrp": 145,
+      "stock": 24,
+      "tag": "Home care",
+      "image": "dishwash",
+      "imagePath": "/uploads/products/1781253048523-21.avif",
+      "updatedAt": "2026-06-12T08:30:49.590Z"
+    }
+  ],
+  "orders": [],
+  "customers": [],
+  "settings": {
+    "storeName": "Miraje",
+    "currency": "INR",
+    "deliveryFee": 35,
+    "freeDeliveryAbove": 499,
+    "banners": [
+      {
+        "id": "ban-1781251698175-7bd448",
+        "title": "Miraje fresh grocery store",
+        "imagePath": "/uploads/banners/1781251698149-2.jpg",
+        "createdAt": "2026-06-12T08:08:18.175Z"
+      },
+      {
+        "id": "ban-1781251681879-1aecca",
+        "title": "Miraje fresh grocery store",
+        "imagePath": "/uploads/banners/1781251681828-banner-1.png",
+        "createdAt": "2026-06-12T08:08:01.879Z"
+      }
+    ],
+    "activeBanner": {
+      "id": "ban-1781251698175-7bd448",
+      "title": "Miraje fresh grocery store",
+      "imagePath": "/uploads/banners/1781251698149-2.jpg",
+      "createdAt": "2026-06-12T08:08:18.175Z"
+    }
+  }
+}

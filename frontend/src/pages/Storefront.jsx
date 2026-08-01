@@ -1,0 +1,93 @@
+import { useEffect, useMemo, useState } from "react";
+import ProductCard from "../components/ProductCard.jsx";
+import CartPanel from "../components/CartPanel.jsx";
+import { categories } from "../data/seedProducts.js";
+import { assetUrl } from "../services/api.js";
+
+export default function Storefront({ products, settings, activeCategory, setActiveCategory, search, setSearch, cart, onAdd, onInc, onDec, onClear, onCheckout }) {
+  const [activeBannerIndex, setActiveBannerIndex] = useState(0);
+  const filtered = products.filter((product) => {
+    const byCategory = activeCategory === "All" || product.category === activeCategory;
+    const bySearch = product.name.toLowerCase().includes(search.toLowerCase()) || product.category.toLowerCase().includes(search.toLowerCase());
+    return byCategory && bySearch;
+  });
+  const banners = useMemo(() => {
+    const savedBanners = Array.isArray(settings?.banners) ? settings.banners.filter((item) => item?.imagePath) : [];
+    if (savedBanners.length) return savedBanners.slice(0, 6);
+    return settings?.activeBanner?.imagePath ? [settings.activeBanner] : [];
+  }, [settings]);
+  const banner = banners[activeBannerIndex] || banners[0];
+
+  useEffect(() => {
+    setActiveBannerIndex(0);
+  }, [banners.length]);
+
+  useEffect(() => {
+    if (banners.length <= 1) return undefined;
+    const timer = window.setInterval(() => {
+      setActiveBannerIndex((index) => (index + 1) % banners.length);
+    }, 4500);
+    return () => window.clearInterval(timer);
+  }, [banners.length]);
+
+  function moveBanner(direction) {
+    if (banners.length <= 1) return;
+    setActiveBannerIndex((index) => (index + direction + banners.length) % banners.length);
+  }
+
+  return (
+    <main className="store-layout">
+      <section className="store-main">
+        <div className={banner?.imagePath ? "hero-card has-banner" : "hero-card"}>
+          {banner?.imagePath && <img className="hero-banner-img" src={assetUrl(banner.imagePath)} alt={banner.title || "Miraje banner"} />}
+          {!banner?.imagePath && (
+            <>
+              <div>
+                <span className="eyebrow">Digital grocery platform</span>
+                <h1>Miraje fresh grocery store</h1>
+                <p>Build orders, manage stock, and prepare fast local delivery from one clean dashboard.</p>
+              </div>
+              <div className="hero-metric">
+                <strong>{products.length}</strong>
+                <span>active products</span>
+              </div>
+            </>
+          )}
+          {banners.length > 1 && (
+            <>
+              <button className="banner-arrow banner-arrow-left" onClick={() => moveBanner(-1)} aria-label="Previous banner">‹</button>
+              <button className="banner-arrow banner-arrow-right" onClick={() => moveBanner(1)} aria-label="Next banner">›</button>
+              <div className="banner-dots" aria-label="Banner carousel">
+                {banners.map((item, index) => (
+                  <button
+                    key={item.id || item.imagePath}
+                    className={index === activeBannerIndex ? "banner-dot active" : "banner-dot"}
+                    onClick={() => setActiveBannerIndex(index)}
+                    aria-label={`Show banner ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
+        <div className="toolbar-card">
+          <input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search fruits, vegetables, staples..." />
+          <div className="category-row">
+            {categories.map((category) => (
+              <button key={category} className={category === activeCategory ? "chip active" : "chip"} onClick={() => setActiveCategory(category)}>
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="product-grid">
+          {filtered.map((product) => <ProductCard key={product.id} product={product} onAdd={onAdd} />)}
+        </div>
+      </section>
+
+      <CartPanel cart={cart} onInc={onInc} onDec={onDec} onClear={onClear} onCheckout={onCheckout} />
+    </main>
+  );
+}
