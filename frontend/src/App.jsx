@@ -47,6 +47,11 @@ export default function App() {
     setView("store");
   }
 
+  function openLogin() {
+    window.history.pushState({}, "", `${window.location.pathname}?admin=1`);
+    setView("admin");
+  }
+
   useEffect(() => {
     let alive = true;
     async function loadCatalog() {
@@ -264,6 +269,7 @@ export default function App() {
         <div className="topbar-status">
           <div className={apiStatus.connected ? "api-badge connected" : "api-badge"}>{apiStatus.label}</div>
           <div className="cart-badge">Cart {cartCount}</div>
+          {view !== "admin" && <button className="login-button" onClick={openLogin}>Login</button>}
         </div>
       </header>
 

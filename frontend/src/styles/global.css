@@ -22,6 +22,7 @@ nav { display: flex; gap: 10px; }
 .nav-button, .ghost-button { border: 1px solid rgba(255,255,255,.32); color: #ffffff; background: rgba(255,255,255,.14); border-radius: 999px; padding: 10px 16px; font-weight: 800; }
 .nav-button.active { color: #0f7b43; background: #ffffff; border-color: #ffffff; box-shadow: 0 10px 24px rgba(15,123,67,.18); }
 .cart-badge { background: #fff5d6; color: #8a5a00; border: 1px solid #f1d38a; padding: 10px 14px; border-radius: 999px; font-weight: 900; }
+.login-button { border: 1px solid rgba(255,255,255,.72); color: #0f7b43; background: #ffffff; border-radius: 999px; padding: 10px 16px; font-weight: 900; box-shadow: 0 10px 22px rgba(15, 123, 67, .16); }
 
 .store-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 22px; padding: 26px; max-width: 1440px; margin: 0 auto; align-items: start; }
 .store-main { display: grid; gap: 18px; }
@@ -100,6 +101,7 @@ nav { display: flex; gap: 10px; }
   .topbar-status { width: 100%; justify-content: space-between; order: 2; }
   .api-badge { display: none; }
   .cart-badge { padding: 8px 11px; }
+  .login-button { padding: 8px 12px; }
   .store-layout, .admin-layout { padding: 10px; }
   .store-main { gap: 10px; }
   .hero-card { align-items: flex-start; flex-direction: column; padding: 22px; }
