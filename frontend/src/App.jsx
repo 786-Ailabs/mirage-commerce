@@ -19,7 +19,7 @@ function saveState(key, value) {
 }
 
 export default function App() {
-  const [view, setView] = useState("store");
+  const [view, setView] = useState(() => new URLSearchParams(window.location.search).get("admin") === "1" ? "admin" : "store");
   const [products, setProducts] = useState(() => loadState("miraje-products", seedProducts));
   const [cart, setCart] = useState(() => loadState("miraje-cart", []));
   const [orders, setOrders] = useState(() => loadState("miraje-orders", []));
@@ -33,6 +33,19 @@ export default function App() {
   const [adminNotice, setAdminNotice] = useState(null);
 
   const cartCount = useMemo(() => cart.reduce((sum, item) => sum + item.qty, 0), [cart]);
+
+  useEffect(() => {
+    function handleRoute() {
+      setView(new URLSearchParams(window.location.search).get("admin") === "1" ? "admin" : "store");
+    }
+    window.addEventListener("popstate", handleRoute);
+    return () => window.removeEventListener("popstate", handleRoute);
+  }, []);
+
+  function openStore() {
+    window.history.pushState({}, "", window.location.pathname);
+    setView("store");
+  }
 
   useEffect(() => {
     let alive = true;
@@ -248,10 +261,6 @@ export default function App() {
           <div className="brand-mark">M</div>
           <div><strong>Miraje</strong><span>Digital Grocery Store</span></div>
         </div>
-        <nav>
-          <button className={view === "store" ? "nav-button active" : "nav-button"} onClick={() => setView("store")}>Storefront</button>
-          <button className={view === "admin" ? "nav-button active" : "nav-button"} onClick={() => setView("admin")}>Admin</button>
-        </nav>
         <div className="topbar-status">
           <div className={apiStatus.connected ? "api-badge connected" : "api-badge"}>{apiStatus.label}</div>
           <div className="cart-badge">Cart {cartCount}</div>
@@ -261,8 +270,7 @@ export default function App() {
       {view === "confirmation" && lastOrder ? (
         <OrderConfirmation
           order={lastOrder}
-          onContinueShopping={() => setView("store")}
-          onViewAdmin={() => setView("admin")}
+          onContinueShopping={openStore}
         />
       ) : view === "store" ? (
         <Storefront

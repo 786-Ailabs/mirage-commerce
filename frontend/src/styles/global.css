@@ -97,8 +97,6 @@ nav { display: flex; gap: 10px; }
   .brand-mark { width: 38px; height: 38px; border-radius: 12px; font-size: 19px; }
   .brand-lockup strong { font-size: 18px; }
   .brand-lockup span { font-size: 12px; }
-  nav { order: 3; width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .nav-button { padding: 9px 10px; }
   .topbar-status { width: 100%; justify-content: space-between; order: 2; }
   .api-badge { display: none; }
   .cart-badge { padding: 8px 11px; }

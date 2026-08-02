@@ -1,4 +1,4 @@
-export default function OrderConfirmation({ order, onContinueShopping, onViewAdmin }) {
+export default function OrderConfirmation({ order, onContinueShopping }) {
   if (!order) return null;
   const itemCount = (order.items || []).reduce((sum, item) => sum + Number(item.qty || 0), 0);
 
@@ -28,7 +28,6 @@ export default function OrderConfirmation({ order, onContinueShopping, onViewAdm
 
         <div className="confirmation-actions">
           <button className="checkout-button" onClick={onContinueShopping}>Continue Shopping</button>
-          <button className="ghost-button" onClick={onViewAdmin}>View Store Admin</button>
         </div>
       </section>
     </main>
