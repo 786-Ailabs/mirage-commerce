@@ -31,7 +31,7 @@ export default function CartPanel({ cart, onInc, onDec, onClear, onCheckout }) {
 
       <div className="cart-list">
         {cart.length === 0 ? (
-          <div className="empty-cart">Add products to start a Miraje order.</div>
+          <div className="empty-cart">Add products to start a Mirage order.</div>
         ) : (
           cart.map((item) => (
             <div className="cart-item" key={item.id}>

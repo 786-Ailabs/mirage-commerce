@@ -1,6 +1,6 @@
-# Miraje Grocery Commerce
+# Mirage Grocery Commerce
 
-Miraje is a local-first digital grocery store platform. Phase 1 includes a React storefront, cart, backend API, local JSON database, admin product entry, and order drafts.
+Mirage is a local-first digital grocery store platform. Phase 1 includes a React storefront, cart, backend API, local JSON database, admin product entry, and order drafts.
 
 ## Fast Start
 

@@ -204,7 +204,7 @@ export default function App() {
   }
 
   async function deleteProduct(id) {
-    const confirmed = window.confirm("Delete this product from Miraje catalog?");
+    const confirmed = window.confirm("Delete this product from Mirage catalog?");
     if (!confirmed) return;
     const nextLocal = products.filter((product) => product.id !== id);
     persistProductsLocal(nextLocal);
@@ -264,7 +264,7 @@ export default function App() {
       <header className="topbar">
         <div className="brand-lockup">
           <div className="brand-mark">M</div>
-          <div><strong>Miraje</strong><span>Digital Grocery Store</span></div>
+          <div><strong>Mirage</strong><span>Digital Grocery Store</span></div>
         </div>
         <div className="topbar-status">
           <div className={apiStatus.connected ? "api-badge connected" : "api-badge"}>{apiStatus.label}</div>

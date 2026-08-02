@@ -11,7 +11,7 @@ async function request(path, options = {}) {
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({ error: response.statusText }));
-    throw new Error(error.error || "Miraje API request failed");
+    throw new Error(error.error || "Mirage API request failed");
   }
 
   return response.json();
@@ -24,7 +24,7 @@ async function upload(path, file, fields = {}) {
   const response = await fetch(`${API_BASE}${path}`, { method: "POST", body: formData });
   if (!response.ok) {
     const error = await response.json().catch(() => ({ error: response.statusText }));
-    throw new Error(error.error || "Miraje upload failed");
+    throw new Error(error.error || "Mirage upload failed");
   }
   return response.json();
 }

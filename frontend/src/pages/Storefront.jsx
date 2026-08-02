@@ -46,12 +46,12 @@ export default function Storefront({ products, settings, activeCategory, setActi
     <main className="store-layout">
       <section className="store-main">
         <div className={banner?.imagePath ? "hero-card has-banner" : "hero-card"}>
-          {banner?.imagePath && <img className="hero-banner-img" src={assetUrl(banner.imagePath)} alt={banner.title || "Miraje banner"} />}
+          {banner?.imagePath && <img className="hero-banner-img" src={assetUrl(banner.imagePath)} alt={banner.title || "Mirage banner"} />}
           {!banner?.imagePath && (
             <>
               <div>
                 <span className="eyebrow">Digital grocery platform</span>
-                <h1>Miraje fresh grocery store</h1>
+                <h1>Mirage fresh grocery store</h1>
                 <p>Build orders, manage stock, and prepare fast local delivery from one clean dashboard.</p>
               </div>
               <div className="hero-metric">
@@ -93,7 +93,7 @@ export default function Storefront({ products, settings, activeCategory, setActi
           <div className="offers-heading">
             <div>
               <span className="eyebrow">Top offers</span>
-              <h2>Save more on Miraje groceries</h2>
+              <h2>Save more on Mirage groceries</h2>
             </div>
             <span>Limited time</span>
           </div>

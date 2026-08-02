@@ -12,7 +12,7 @@ const initialData = {
   orders: [],
   customers: [],
   settings: {
-    storeName: "Miraje",
+    storeName: "Mirage",
     currency: "INR",
     deliveryFee: 35,
     freeDeliveryAbove: 499

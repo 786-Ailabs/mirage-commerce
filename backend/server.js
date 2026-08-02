@@ -85,7 +85,7 @@ function buildStats(db) {
 
 app.get("/api/health", async (_req, res) => {
   const db = await readDb();
-  res.json({ ok: true, service: "Miraje Grocery API", mode: "local-json-db", counts: { products: db.products.length, orders: db.orders.length, customers: (db.customers || []).length, banners: db.settings?.banners?.length || 0 } });
+  res.json({ ok: true, service: "Mirage Grocery API", mode: "local-json-db", counts: { products: db.products.length, orders: db.orders.length, customers: (db.customers || []).length, banners: db.settings?.banners?.length || 0 } });
 });
 
 app.get("/api/catalog", async (_req, res) => {
@@ -219,7 +219,7 @@ app.post("/api/uploads/:kind", upload.single("image"), async (req, res) => {
   const imagePath = publicUploadPath(kind, req.file.filename);
   if (kind === "banner") {
     const db = await readDb();
-    const banner = { id: makeId("ban"), title: req.body.title || "Miraje fresh grocery banner", imagePath, createdAt: new Date().toISOString() };
+    const banner = { id: makeId("ban"), title: req.body.title || "Mirage fresh grocery banner", imagePath, createdAt: new Date().toISOString() };
     db.settings = db.settings || {};
     db.settings.banners = [banner, ...(db.settings.banners || [])].filter((item) => item?.imagePath).slice(0, 6);
     db.settings.activeBanner = banner;
@@ -241,7 +241,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.listen(port, () => console.log(`Miraje backend running on http://127.0.0.1:${port}`));
+app.listen(port, () => console.log(`Mirage backend running on http://127.0.0.1:${port}`));
 
 
 
