@@ -4,6 +4,13 @@ import CartPanel from "../components/CartPanel.jsx";
 import { categories } from "../data/seedProducts.js";
 import { assetUrl } from "../services/api.js";
 
+const topOffers = [
+  { title: "Deals of the week", subtitle: "Fresh savings every day", accent: "deal" },
+  { title: "Big pack, bigger discounts", subtitle: "Save more on family packs", accent: "pack" },
+  { title: "Combos you can't miss", subtitle: "Best grocery bundles", accent: "combo" },
+  { title: "Rs 50 gift vouchers", subtitle: "Rewards on selected orders", accent: "voucher" }
+];
+
 export default function Storefront({ products, settings, activeCategory, setActiveCategory, search, setSearch, cart, onAdd, onInc, onDec, onClear, onCheckout }) {
   const [activeBannerIndex, setActiveBannerIndex] = useState(0);
   const filtered = products.filter((product) => {
@@ -81,6 +88,24 @@ export default function Storefront({ products, settings, activeCategory, setActi
             ))}
           </div>
         </div>
+
+        <section className="top-offers-card">
+          <div className="offers-heading">
+            <div>
+              <span className="eyebrow">Top offers</span>
+              <h2>Save more on Miraje groceries</h2>
+            </div>
+            <span>Limited time</span>
+          </div>
+          <div className="offers-grid">
+            {topOffers.map((offer) => (
+              <button className={`offer-tile ${offer.accent}`} key={offer.title}>
+                <strong>{offer.title}</strong>
+                <span>{offer.subtitle}</span>
+              </button>
+            ))}
+          </div>
+        </section>
 
         <div className="product-grid">
           {filtered.map((product) => <ProductCard key={product.id} product={product} onAdd={onAdd} />)}
