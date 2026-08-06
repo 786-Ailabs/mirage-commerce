@@ -82,6 +82,7 @@ export default function App() {
   function openStore() {
     window.history.pushState({}, "", window.location.pathname);
     setView("store");
+    setCartOpen(false);
   }
 
   function openLogin() {
@@ -348,7 +349,11 @@ export default function App() {
               </button>
             </div>
             <div className="topbar-right">
-              {view !== "admin" && <button className="top-link login-link" onClick={openLogin}>Log In</button>}
+              {view === "admin" ? (
+                <button className="top-link admin-access-link" onClick={goHome}>Storefront</button>
+              ) : (
+                <button className="top-link admin-access-link" onClick={openLogin}>Admin</button>
+              )}
               <button className="cart-summary" type="button" onClick={goCart} aria-label={`Cart ${cartCount} item${cartCount === 1 ? "" : "s"}`}>
                 <CartIcon />
                 <span>Cart</span>
