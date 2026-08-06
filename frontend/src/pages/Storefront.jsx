@@ -11,7 +11,7 @@ const topOffers = [
   { title: "Rs 50 gift vouchers", subtitle: "Rewards on selected orders", accent: "voucher" }
 ];
 
-export default function Storefront({ products, settings, activeCategory, setActiveCategory, search, setSearch, cart, onAdd, onInc, onDec, onClear, onCheckout }) {
+export default function Storefront({ products, settings, activeCategory, setActiveCategory, search, setSearch, cart, cartOpen, onAdd, onInc, onDec, onClear, onCheckout, onCloseCart }) {
   const [activeBannerIndex, setActiveBannerIndex] = useState(0);
   const filtered = products.filter((product) => {
     const byCategory = activeCategory === "All" || product.category === activeCategory;
@@ -111,7 +111,12 @@ export default function Storefront({ products, settings, activeCategory, setActi
         </div>
       </section>
 
-      <CartPanel cart={cart} onInc={onInc} onDec={onDec} onClear={onClear} onCheckout={onCheckout} />
+      {cartOpen && (
+        <div className="cart-drawer-layer" role="presentation">
+          <button className="cart-drawer-backdrop" type="button" onClick={onCloseCart} aria-label="Close cart" />
+          <CartPanel cart={cart} onInc={onInc} onDec={onDec} onClear={onClear} onCheckout={onCheckout} onClose={onCloseCart} />
+        </div>
+      )}
     </main>
   );
 }

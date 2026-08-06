@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const emptyCustomer = { name: "", phone: "", address: "", deliverySlot: "Today 6 PM - 9 PM", paymentMode: "Cash on Delivery", note: "" };
 
-export default function CartPanel({ cart, onInc, onDec, onClear, onCheckout }) {
+export default function CartPanel({ cart, onInc, onDec, onClear, onCheckout, onClose }) {
   const [customer, setCustomer] = useState(emptyCustomer);
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   const delivery = subtotal >= 499 || subtotal === 0 ? 0 : 35;
@@ -26,7 +26,10 @@ export default function CartPanel({ cart, onInc, onDec, onClear, onCheckout }) {
           <span className="eyebrow">Basket</span>
           <h2>Current Cart</h2>
         </div>
-        <button className="ghost-button" onClick={onClear}>Clear</button>
+        <div className="cart-panel-actions">
+          <button className="ghost-button" onClick={onClear}>Clear</button>
+          {onClose && <button className="ghost-button" onClick={onClose}>Close</button>}
+        </div>
       </div>
 
       <div className="cart-list">

@@ -57,7 +57,7 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .top-link:focus-visible, .cart-summary:focus-visible, .header-brand:focus-visible, .main-nav-link:focus-visible, .search-clear:focus-visible { outline: 3px solid rgba(245,158,11,.7); outline-offset: 2px; }
 .ghost-button { border: 1px solid #cfe0c8; color: #285437; background: #ffffff; border-radius: 999px; padding: 10px 16px; font-weight: 800; }
 
-.store-layout { display: grid; grid-template-columns: minmax(0, 1fr) 360px; gap: 22px; padding: 26px; max-width: 1440px; margin: 0 auto; align-items: start; }
+.store-layout { display: block; padding: 26px; max-width: 1440px; margin: 0 auto; }
 .store-main { display: grid; gap: 18px; }
 .hero-card, .toolbar-card, .top-offers-card, .cart-panel, .admin-card, .summary-card, .product-card { background: rgba(255,255,255,0.96); border: 1px solid #dbe8d4; border-radius: 22px; box-shadow: 0 14px 36px rgba(25, 67, 36, .08); }
 .hero-card { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 30px; background: linear-gradient(135deg, #0b3d28, #166d42); color: white; overflow: hidden; position: relative; }
@@ -90,7 +90,7 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .offer-tile.pack { background: linear-gradient(135deg, #183324, #6d9f22); }
 .offer-tile.combo { background: linear-gradient(135deg, #f08a00, #c94b12); }
 .offer-tile.voucher { background: linear-gradient(135deg, #7b2cbf, #0f7b43); }
-.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.product-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
 .product-card { padding: 14px; display: grid; gap: 12px; transition: transform .2s ease, box-shadow .2s ease; }
 .product-card:hover { transform: translateY(-4px); box-shadow: 0 24px 55px rgba(15,123,67,.14); }
 .product-art { min-height: 132px; border-radius: 18px; background: linear-gradient(135deg, #eef9e9, #fff8dc); display: grid; place-items: center; text-transform: capitalize; color: #0f7b43; font-size: 22px; font-weight: 900; }
@@ -103,7 +103,10 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
 .price-row em { color: #8a5a00; background: #fff1c7; padding: 5px 8px; border-radius: 999px; font-style: normal; font-size: 12px; font-weight: 900; }
 .add-button, .checkout-button { border: none; border-radius: 14px; padding: 13px 16px; color: white; background: linear-gradient(135deg, #0f7b43, #6aa52d); font-weight: 900; box-shadow: 0 14px 28px rgba(15,123,67,.2); }
 
-.cart-panel { position: sticky; top: 210px; padding: 18px; display: grid; gap: 16px; }
+.cart-panel { position: relative; z-index: 32; width: min(420px, calc(100vw - 24px)); max-height: calc(100vh - 24px); overflow: auto; padding: 18px; display: grid; gap: 16px; }
+.cart-drawer-layer { position: fixed; inset: 0; z-index: 30; display: flex; justify-content: flex-end; padding: 12px; }
+.cart-drawer-backdrop { position: absolute; inset: 0; border: 0; background: rgba(15, 35, 24, .34); backdrop-filter: blur(2px); }
+.cart-panel-actions { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 8px; }
 .panel-heading { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
 .panel-heading h2 { margin: 4px 0 0; color: #152b1f; }
 .cart-list, .orders-list { display: grid; gap: 10px; max-height: 360px; overflow: auto; }
@@ -133,9 +136,12 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
   .header-inner { padding-inline: 18px; }
   .topbar-left, .topbar-right { gap: 10px; }
   .search-inner { gap: 14px; grid-template-columns: auto minmax(220px, 1fr); }
-  .store-layout { grid-template-columns: 1fr; }
-  .cart-panel { position: static; }
+  .product-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .admin-summary-grid, .product-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 1240px) and (min-width: 981px) {
+  .product-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 @media (max-width: 620px) {
@@ -232,6 +238,8 @@ button:disabled { cursor: not-allowed; opacity: 0.55; }
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
   }
+  .cart-drawer-layer { justify-content: center; padding: 8px; }
+  .cart-panel { width: min(100%, 390px); max-height: calc(100vh - 16px); border-radius: 18px; }
   .product-card {
     gap: 8px;
     padding: 9px;

@@ -67,6 +67,7 @@ export default function App() {
   const [lastOrder, setLastOrder] = useState(() => loadState("miraje-last-order", null));
   const [adminNotice, setAdminNotice] = useState(null);
   const [activeNav, setActiveNav] = useState("home");
+  const [cartOpen, setCartOpen] = useState(false);
 
   const cartCount = useMemo(() => cart.reduce((sum, item) => sum + item.qty, 0), [cart]);
 
@@ -122,7 +123,7 @@ export default function App() {
 
   function goCart() {
     openStore();
-    scrollToStoreSection("cart-panel");
+    setCartOpen(true);
   }
 
   useEffect(() => {
@@ -249,6 +250,7 @@ export default function App() {
     }
 
     persistCart([]);
+    setCartOpen(false);
     setView("confirmation");
   }
 
@@ -409,11 +411,13 @@ export default function App() {
           search={search}
           setSearch={setSearch}
           cart={cart}
+          cartOpen={cartOpen}
           onAdd={addToCart}
           onInc={increment}
           onDec={decrement}
           onClear={() => persistCart([])}
           onCheckout={checkout}
+          onCloseCart={() => setCartOpen(false)}
         />
       ) : (
         <Admin
