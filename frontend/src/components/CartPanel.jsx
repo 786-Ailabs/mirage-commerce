@@ -20,7 +20,7 @@ export default function CartPanel({ cart, onInc, onDec, onClear, onCheckout }) {
   }
 
   return (
-    <aside className="cart-panel">
+    <aside id="cart-panel" className="cart-panel">
       <div className="panel-heading">
         <div>
           <span className="eyebrow">Basket</span>
@@ -31,7 +31,7 @@ export default function CartPanel({ cart, onInc, onDec, onClear, onCheckout }) {
 
       <div className="cart-list">
         {cart.length === 0 ? (
-          <div className="empty-cart">Add products to start a Mirage order.</div>
+          <div className="empty-cart">Add products to start an N Mart order.</div>
         ) : (
           cart.map((item) => (
             <div className="cart-item" key={item.id}>

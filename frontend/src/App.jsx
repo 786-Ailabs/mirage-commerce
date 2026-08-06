@@ -18,6 +18,41 @@ function saveState(key, value) {
   localStorage.setItem(key, JSON.stringify(value));
 }
 
+function LocationIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M12 21s7-6.1 7-12A7 7 0 0 0 5 9c0 5.9 7 12 7 12Z" fill="none" stroke="currentColor" strokeWidth="2" />
+      <circle cx="12" cy="9" r="2.4" fill="currentColor" />
+    </svg>
+  );
+}
+
+function CartIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M3 4h2l2.2 10.3a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 1.9-1.4L21 7H6" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="10" cy="20" r="1.5" fill="currentColor" />
+      <circle cx="17" cy="20" r="1.5" fill="currentColor" />
+    </svg>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="m21 21-4.3-4.3M10.8 18a7.2 7.2 0 1 1 0-14.4 7.2 7.2 0 0 1 0 14.4Z" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function CategoryIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M4 6h16M4 12h16M4 18h16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export default function App() {
   const [view, setView] = useState(() => new URLSearchParams(window.location.search).get("admin") === "1" ? "admin" : "store");
   const [products, setProducts] = useState(() => loadState("miraje-products", seedProducts));
@@ -31,6 +66,7 @@ export default function App() {
   const [apiStatus, setApiStatus] = useState({ connected: false, label: "Local fallback" });
   const [lastOrder, setLastOrder] = useState(() => loadState("miraje-last-order", null));
   const [adminNotice, setAdminNotice] = useState(null);
+  const [activeNav, setActiveNav] = useState("home");
 
   const cartCount = useMemo(() => cart.reduce((sum, item) => sum + item.qty, 0), [cart]);
 
@@ -50,6 +86,43 @@ export default function App() {
   function openLogin() {
     window.history.pushState({}, "", `${window.location.pathname}?admin=1`);
     setView("admin");
+  }
+
+  function scrollToStoreSection(id) {
+    window.setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 50);
+  }
+
+  function goHome() {
+    openStore();
+    setActiveNav("home");
+    setActiveCategory("All");
+    setSearch("");
+    scrollToStoreSection("home-banner");
+  }
+
+  function goCategories() {
+    openStore();
+    setActiveNav("categories");
+    scrollToStoreSection("category-filters");
+  }
+
+  function goDeals() {
+    openStore();
+    setActiveNav("deals");
+    scrollToStoreSection("deals");
+  }
+
+  function goNewArrivals() {
+    openStore();
+    setActiveNav("new-arrivals");
+    scrollToStoreSection("new-arrivals");
+  }
+
+  function goCart() {
+    openStore();
+    scrollToStoreSection("cart-panel");
   }
 
   useEffect(() => {
@@ -204,7 +277,7 @@ export default function App() {
   }
 
   async function deleteProduct(id) {
-    const confirmed = window.confirm("Delete this product from Mirage catalog?");
+    const confirmed = window.confirm("Delete this product from N Mart catalog?");
     if (!confirmed) return;
     const nextLocal = products.filter((product) => product.id !== id);
     persistProductsLocal(nextLocal);
@@ -261,16 +334,65 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <header className="topbar">
-        <div className="brand-lockup">
-          <div className="brand-mark">M</div>
-          <div><strong>Mirage</strong><span>Digital Grocery Store</span></div>
+      <header className="site-header">
+        <div className="header-topbar">
+          <div className="header-inner topbar-inner">
+            <div className="topbar-left">
+              <button className={activeNav === "home" ? "top-link active" : "top-link"} onClick={goHome}>Home</button>
+              <button className="top-link brand-link" onClick={goHome}>N Mart</button>
+              <button className="top-link location-link" type="button">
+                <LocationIcon />
+                <span>Select Delivery Area</span>
+              </button>
+            </div>
+            <div className="topbar-right">
+              {view !== "admin" && <button className="top-link login-link" onClick={openLogin}>Log In</button>}
+              <button className="cart-summary" type="button" onClick={goCart} aria-label={`Cart ${cartCount} item${cartCount === 1 ? "" : "s"}`}>
+                <CartIcon />
+                <span>Cart</span>
+                <strong className="cart-count-badge">{cartCount}</strong>
+              </button>
+            </div>
+          </div>
         </div>
-        <div className="topbar-status">
-          <div className={apiStatus.connected ? "api-badge connected" : "api-badge"}>{apiStatus.label}</div>
-          <div className="cart-badge">Cart {cartCount}</div>
-          {view !== "admin" && <button className="login-button" onClick={openLogin}>Login</button>}
+
+        <div className="header-search-row">
+          <div className="header-inner search-inner">
+            <button className="header-brand" onClick={goHome} aria-label="N Mart home">
+              <span className="brand-mark">N</span>
+              <span className="brand-copy">
+                <strong>N Mart</strong>
+                <small>Digital Grocery Store</small>
+              </span>
+            </button>
+            <label className="header-search" htmlFor="site-product-search">
+              <SearchIcon />
+              <input
+                id="site-product-search"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Search for products, brands and categories"
+              />
+              {search && (
+                <button className="search-clear" type="button" onClick={() => setSearch("")} aria-label="Clear search">
+                  Clear
+                </button>
+              )}
+            </label>
+          </div>
         </div>
+
+        <nav className="header-nav-row" aria-label="Main navigation">
+          <div className="header-inner nav-inner">
+            <button className={activeNav === "categories" ? "main-nav-link active" : "main-nav-link"} onClick={goCategories}>
+              <CategoryIcon />
+              <span>Shop by Categories</span>
+            </button>
+            <button className={activeNav === "home" ? "main-nav-link active" : "main-nav-link"} onClick={goHome}>Home</button>
+            <button className={activeNav === "deals" ? "main-nav-link active" : "main-nav-link"} onClick={goDeals}>Deals</button>
+            <button className={activeNav === "new-arrivals" ? "main-nav-link active" : "main-nav-link"} onClick={goNewArrivals}>New Arrivals</button>
+          </div>
+        </nav>
       </header>
 
       {view === "confirmation" && lastOrder ? (

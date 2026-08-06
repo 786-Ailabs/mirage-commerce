@@ -8,7 +8,7 @@ export default function OrderConfirmation({ order, onContinueShopping }) {
         <div className="success-mark">OK</div>
         <span className="eyebrow">Order confirmed</span>
         <h1>Thank you, {order.customer?.name || "Customer"}</h1>
-        <p>Your Mirage grocery order has been created and sent to the store team for fulfilment.</p>
+        <p>Your N Mart grocery order has been created and sent to the store team for fulfilment.</p>
 
         <div className="confirmation-grid">
           <div><span>Order ID</span><strong>{order.id}</strong></div>

@@ -1,13 +1,13 @@
-# Mirage Grocery Commerce
+# N Mart Grocery Commerce
 
-Mirage is a local-first digital grocery store platform. Phase 1 includes a React storefront, cart, backend API, local JSON database, admin product entry, and order drafts.
+N Mart is a local-first digital grocery store platform. Phase 1 includes a React storefront, cart, backend API, local JSON database, admin product entry, and order drafts.
 
 ## Fast Start
 
 Double-click:
 
 ```text
-F:\Miraje\Open-Miraje-Full-App.bat
+E:\Miraje\Open-Miraje-Full-App.bat
 ```
 
 Then open:
@@ -21,7 +21,7 @@ http://127.0.0.1:5173
 Backend:
 
 ```powershell
-cd F:\Miraje\backend
+cd E:\Miraje\backend
 npm install
 npm run dev
 ```
@@ -29,7 +29,7 @@ npm run dev
 Frontend:
 
 ```powershell
-cd F:\Miraje\frontend
+cd E:\Miraje\frontend
 npm install
 npm run dev
 ```
@@ -39,7 +39,7 @@ npm run dev
 The current local database file is:
 
 ```text
-F:\Miraje\backend\db\miraje-store.json
+E:\Miraje\backend\db\miraje-store.json
 ```
 
 ## Current Features

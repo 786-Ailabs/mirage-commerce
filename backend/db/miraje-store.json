@@ -174,27 +174,27 @@
   "orders": [],
   "customers": [],
   "settings": {
-    "storeName": "Mirage",
+    "storeName": "N Mart",
     "currency": "INR",
     "deliveryFee": 35,
     "freeDeliveryAbove": 499,
     "banners": [
       {
         "id": "ban-1781251698175-7bd448",
-        "title": "Mirage fresh grocery store",
+        "title": "N Mart fresh grocery store",
         "imagePath": "/uploads/banners/1781251698149-2.jpg",
         "createdAt": "2026-06-12T08:08:18.175Z"
       },
       {
         "id": "ban-1781251681879-1aecca",
-        "title": "Mirage fresh grocery store",
+        "title": "N Mart fresh grocery store",
         "imagePath": "/uploads/banners/1781251681828-banner-1.png",
         "createdAt": "2026-06-12T08:08:01.879Z"
       }
     ],
     "activeBanner": {
       "id": "ban-1781251698175-7bd448",
-      "title": "Mirage fresh grocery store",
+      "title": "N Mart fresh grocery store",
       "imagePath": "/uploads/banners/1781251698149-2.jpg",
       "createdAt": "2026-06-12T08:08:18.175Z"
     }
