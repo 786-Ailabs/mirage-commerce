@@ -19,7 +19,7 @@ const frontendDist = path.join(projectRoot, "frontend", "dist");
 for (const dir of [productUploadDir, bannerUploadDir]) fs.mkdirSync(dir, { recursive: true });
 
 const storage = multer.diskStorage({
-  destination(req, _file, cb) { cb(null, req.params.kind === "banner" ? bannerUploadDir : productUploadDir); },
+  destination(req, _file, cb) { cb(null, req.params.kind === "product" ? productUploadDir : bannerUploadDir); },
   filename(_req, file, cb) {
     const safeBase = path.basename(file.originalname, path.extname(file.originalname)).replace(/[^a-z0-9]+/gi, "-").toLowerCase();
     cb(null, `${Date.now()}-${safeBase}${path.extname(file.originalname).toLowerCase()}`);
@@ -47,7 +47,13 @@ function sortByNewest(items) {
 }
 
 function publicUploadPath(kind, filename) {
-  return `/uploads/${kind === "banner" ? "banners" : "products"}/${filename}`;
+  return `/uploads/${kind === "product" ? "products" : "banners"}/${filename}`;
+}
+
+function marketingConfig(kind) {
+  if (kind === "poster") return { arrayKey: "posters", prefix: "pos", fallbackTitle: "N Mart grocery poster", limit: 12 };
+  if (kind === "offer") return { arrayKey: "offerBanners", prefix: "off", fallbackTitle: "N Mart offer banner", limit: 8 };
+  return { arrayKey: "banners", prefix: "ban", fallbackTitle: "N Mart fresh grocery banner", limit: 6 };
 }
 
 function upsertCustomer(db, customer = {}) {
@@ -215,14 +221,15 @@ app.patch("/api/orders/:id", async (req, res) => {
 });
 app.post("/api/uploads/:kind", upload.single("image"), async (req, res) => {
   if (!req.file) return res.status(400).json({ error: "Image file is required." });
-  const kind = req.params.kind === "banner" ? "banner" : "product";
+  const kind = ["banner", "poster", "offer"].includes(req.params.kind) ? req.params.kind : "product";
   const imagePath = publicUploadPath(kind, req.file.filename);
-  if (kind === "banner") {
+  if (kind !== "product") {
     const db = await readDb();
-    const banner = { id: makeId("ban"), title: req.body.title || "N Mart fresh grocery banner", imagePath, createdAt: new Date().toISOString() };
+    const config = marketingConfig(kind);
+    const banner = { id: makeId(config.prefix), title: req.body.title || config.fallbackTitle, imagePath, createdAt: new Date().toISOString() };
     db.settings = db.settings || {};
-    db.settings.banners = [banner, ...(db.settings.banners || [])].filter((item) => item?.imagePath).slice(0, 6);
-    db.settings.activeBanner = banner;
+    db.settings[config.arrayKey] = [banner, ...(db.settings[config.arrayKey] || [])].filter((item) => item?.imagePath).slice(0, config.limit);
+    if (kind === "banner") db.settings.activeBanner = banner;
     await writeDb(db);
     return res.status(201).json({ banner, settings: db.settings });
   }

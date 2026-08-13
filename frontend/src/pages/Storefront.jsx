@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import ProductCard from "../components/ProductCard.jsx";
 import CartPanel from "../components/CartPanel.jsx";
 import { categories } from "../data/seedProducts.js";
@@ -9,6 +9,15 @@ const topOffers = [
   { title: "Big pack, bigger discounts", subtitle: "Save more on family packs", accent: "pack" },
   { title: "Combos you can't miss", subtitle: "Best grocery bundles", accent: "combo" },
   { title: "Rs 50 gift vouchers", subtitle: "Rewards on selected orders", accent: "voucher" }
+];
+
+const featuredCategories = [
+  { name: "Fruits", icon: "Fr" },
+  { name: "Vegetables", icon: "Vg" },
+  { name: "Dairy", icon: "Dy" },
+  { name: "Staples", icon: "St" },
+  { name: "Snacks", icon: "Sn" },
+  { name: "Household", icon: "Hm" }
 ];
 
 export default function Storefront({ products, settings, activeCategory, setActiveCategory, search, setSearch, cart, cartOpen, onAdd, onInc, onDec, onClear, onCheckout, onCloseCart }) {
@@ -23,6 +32,9 @@ export default function Storefront({ products, settings, activeCategory, setActi
     if (savedBanners.length) return savedBanners.slice(0, 6);
     return settings?.activeBanner?.imagePath ? [settings.activeBanner] : [];
   }, [settings]);
+  const posters = useMemo(() => (Array.isArray(settings?.posters) ? settings.posters.filter((item) => item?.imagePath).slice(0, 12) : []), [settings]);
+  const offerBanners = useMemo(() => (Array.isArray(settings?.offerBanners) ? settings.offerBanners.filter((item) => item?.imagePath).slice(0, 8) : []), [settings]);
+  const categoryCounts = useMemo(() => products.reduce((acc, product) => ({ ...acc, [product.category]: (acc[product.category] || 0) + 1 }), {}), [products]);
   const banner = banners[activeBannerIndex] || banners[0];
 
   useEffect(() => {
@@ -42,9 +54,37 @@ export default function Storefront({ products, settings, activeCategory, setActi
     setActiveBannerIndex((index) => (index + direction + banners.length) % banners.length);
   }
 
+  function chooseCategory(category) {
+    setActiveCategory(activeCategory === category ? "All" : category);
+  }
+
+  function renderPosterScroller(blockIndex) {
+    if (!posters.length) return null;
+    return (
+      <section className="product-poster-scroller" aria-label={`Promotional posters ${blockIndex + 1}`}>
+        <div className="poster-track">
+          {posters.map((poster, index) => (
+            <figure className="poster-slide" key={`${poster.id || poster.imagePath}-${blockIndex}`}>
+              <img src={assetUrl(poster.imagePath)} alt={poster.title || `N Mart poster ${index + 1}`} />
+            </figure>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
   return (
     <main className="store-layout">
       <section className="store-main">
+        <section className="category-icon-strip" aria-label="Featured categories">
+          {featuredCategories.map((category) => (
+            <button key={category.name} className={activeCategory === category.name ? "category-icon-card active" : "category-icon-card"} onClick={() => chooseCategory(category.name)}>
+              <span>{category.icon}</span>
+              <strong>{category.name}</strong>
+            </button>
+          ))}
+        </section>
+
         <div id="home-banner" className={banner?.imagePath ? "hero-card has-banner" : "hero-card"}>
           {banner?.imagePath && <img className="hero-banner-img" src={assetUrl(banner.imagePath)} alt={banner.title || "N Mart banner"} />}
           {!banner?.imagePath && (
@@ -81,7 +121,7 @@ export default function Storefront({ products, settings, activeCategory, setActi
         <div id="category-filters" className="toolbar-card category-filter-card">
           <div className="category-row">
             {categories.map((category) => (
-              <button key={category} className={category === activeCategory ? "chip active" : "chip"} onClick={() => setActiveCategory(category)}>
+              <button key={category} className={category === activeCategory ? "chip active" : "chip"} onClick={() => category === "All" ? setActiveCategory("All") : chooseCategory(category)}>
                 {category}
               </button>
             ))}
@@ -104,10 +144,47 @@ export default function Storefront({ products, settings, activeCategory, setActi
               </button>
             ))}
           </div>
+          {offerBanners.length > 0 && (
+            <div className="offer-banner-strip">
+              {offerBanners.map((offer, index) => (
+                <figure className="offer-banner-card" key={offer.id || offer.imagePath}>
+                  <img src={assetUrl(offer.imagePath)} alt={offer.title || `N Mart offer banner ${index + 1}`} />
+                </figure>
+              ))}
+            </div>
+          )}
         </section>
 
-        <div id="new-arrivals" className="product-grid">
-          {filtered.map((product) => <ProductCard key={product.id} product={product} onAdd={onAdd} />)}
+        <div className="store-content-grid">
+          <aside className="category-sidebar" aria-label="Category filters">
+            <div className="sidebar-card">
+              <div>
+                <span className="eyebrow">Categories</span>
+                <h2>Filter products</h2>
+              </div>
+              <label className="category-check">
+                <input type="checkbox" checked={activeCategory === "All"} onChange={() => setActiveCategory("All")} />
+                <span>All products</span>
+                <em>{products.length}</em>
+              </label>
+              {categories.filter((category) => category !== "All").map((category) => (
+                <label className="category-check" key={category}>
+                  <input type="checkbox" checked={activeCategory === category} onChange={() => chooseCategory(category)} />
+                  <span>{category}</span>
+                  <em>{categoryCounts[category] || 0}</em>
+                </label>
+              ))}
+            </div>
+          </aside>
+
+          <div id="new-arrivals" className="product-grid">
+            {filtered.map((product, index) => (
+              <Fragment key={product.id}>
+                <ProductCard product={product} onAdd={onAdd} />
+                {(index + 1) % 6 === 0 && renderPosterScroller(Math.floor(index / 6))}
+              </Fragment>
+            ))}
+          </div>
         </div>
       </section>
 

@@ -15,7 +15,10 @@ const initialData = {
     storeName: "N Mart",
     currency: "INR",
     deliveryFee: 35,
-    freeDeliveryAbove: 499
+    freeDeliveryAbove: 499,
+    banners: [],
+    posters: [],
+    offerBanners: []
   }
 };
 

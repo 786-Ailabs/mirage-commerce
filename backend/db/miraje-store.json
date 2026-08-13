@@ -500,6 +500,8 @@
     "currency": "INR",
     "deliveryFee": 35,
     "freeDeliveryAbove": 499,
+    "posters": [],
+    "offerBanners": [],
     "banners": [
       {
         "id": "ban-1781251698175-7bd448",

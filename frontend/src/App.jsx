@@ -305,9 +305,9 @@ export default function App() {
     }
   }
 
-  async function uploadBanner(file, title) {
+  async function uploadBanner(file, title, kind = "banner") {
     try {
-      const result = await mirajeApi.uploadBanner(file, title);
+      const result = await mirajeApi.uploadBanner(file, title, kind);
       persistSettingsLocal(result.settings || settings);
       markConnected();
       return result;

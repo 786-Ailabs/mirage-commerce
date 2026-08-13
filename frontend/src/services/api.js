@@ -60,7 +60,7 @@ export const mirajeApi = {
   uploadProductImage(file) {
     return upload("/uploads/product", file);
   },
-  uploadBanner(file, title) {
-    return upload("/uploads/banner", file, { title });
+  uploadBanner(file, title, kind = "banner") {
+    return upload(`/uploads/${kind}`, file, { title });
   }
 };
