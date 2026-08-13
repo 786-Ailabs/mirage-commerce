@@ -22,6 +22,7 @@ const featuredCategories = [
 
 export default function Storefront({ products, settings, activeCategory, setActiveCategory, search, setSearch, cart, cartOpen, onAdd, onInc, onDec, onClear, onCheckout, onCloseCart }) {
   const [activeBannerIndex, setActiveBannerIndex] = useState(0);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const filtered = products.filter((product) => {
     const byCategory = activeCategory === "All" || product.category === activeCategory;
     const bySearch = product.name.toLowerCase().includes(search.toLowerCase()) || product.category.toLowerCase().includes(search.toLowerCase());
@@ -56,6 +57,7 @@ export default function Storefront({ products, settings, activeCategory, setActi
 
   function chooseCategory(category) {
     setActiveCategory(activeCategory === category ? "All" : category);
+    setMobileFiltersOpen(false);
   }
 
   function renderPosterScroller(blockIndex) {
@@ -84,6 +86,13 @@ export default function Storefront({ products, settings, activeCategory, setActi
             </button>
           ))}
         </section>
+
+        <div className="mobile-filter-row">
+          <button className="mobile-filter-button" type="button" onClick={() => setMobileFiltersOpen(true)}>
+            Categories
+          </button>
+          <span>{activeCategory === "All" ? "All products" : activeCategory}</span>
+        </div>
 
         <div id="home-banner" className={banner?.imagePath ? "hero-card has-banner" : "hero-card"}>
           {banner?.imagePath && <img className="hero-banner-img" src={assetUrl(banner.imagePath)} alt={banner.title || "N Mart banner"} />}
@@ -156,14 +165,15 @@ export default function Storefront({ products, settings, activeCategory, setActi
         </section>
 
         <div className="store-content-grid">
-          <aside className="category-sidebar" aria-label="Category filters">
+          <aside className={mobileFiltersOpen ? "category-sidebar open" : "category-sidebar"} aria-label="Category filters">
+            <button className="category-sidebar-backdrop" type="button" onClick={() => setMobileFiltersOpen(false)} aria-label="Close category filters" />
             <div className="sidebar-card">
               <div>
                 <span className="eyebrow">Categories</span>
                 <h2>Filter products</h2>
               </div>
               <label className="category-check">
-                <input type="checkbox" checked={activeCategory === "All"} onChange={() => setActiveCategory("All")} />
+                <input type="checkbox" checked={activeCategory === "All"} onChange={() => { setActiveCategory("All"); setMobileFiltersOpen(false); }} />
                 <span>All products</span>
                 <em>{products.length}</em>
               </label>
